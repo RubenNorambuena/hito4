@@ -4,7 +4,7 @@ import jwt from 'jsonwebtoken';
 config(); // Cargar variables de entorno
 
 // Expresión regular para validar emails
-const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/; // Una expresión regular más restrictiva
+const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
 
 // Middleware para validar la creación de usuario
 export const validateUserCreation = (req, res, next) => {
@@ -13,6 +13,11 @@ export const validateUserCreation = (req, res, next) => {
     // Verificación de campos vacíos
     if (!name || !email || !password || !date_birth) {
         return res.status(400).json({ message: 'Todos los campos (nombre, email, contraseña y fecha de nacimiento) son obligatorios.' });
+    }
+
+    // Validación de longitud del nombre
+    if (name.length < 2 || name.length > 50) {
+        return res.status(400).json({ message: 'El nombre debe tener entre 2 y 50 caracteres.' });
     }
 
     // Validación de formato de email
@@ -25,14 +30,13 @@ export const validateUserCreation = (req, res, next) => {
         return res.status(400).json({ message: 'La contraseña debe tener al menos 6 caracteres.' });
     }
 
-    // Validación básica de formato de fecha (puedes personalizar esto según tus necesidades)
+    // Validación de formato de fecha
     const birthDate = new Date(date_birth);
     if (isNaN(birthDate.getTime())) {
         return res.status(400).json({ message: 'Formato de fecha de nacimiento no válido.' });
     }
 
-    // Continuar si todo está correcto
-    next();
+    next(); // Continuar si todo está correcto
 };
 
 // Middleware para validar login
@@ -49,8 +53,12 @@ export const validateLogin = (req, res, next) => {
         return res.status(400).json({ message: 'Formato de email no válido.' });
     }
 
-    // Continuar si todo está correcto
-    next();
+    // Validación de longitud de la contraseña
+    if (password.length < 6) {
+        return res.status(400).json({ message: 'La contraseña debe tener al menos 6 caracteres.' });
+    }
+
+    next(); // Continuar si todo está correcto
 };
 
 // Middleware para verificar el token JWT
@@ -68,11 +76,10 @@ export const verifyToken = (req, res, next) => {
     try {
         // Verificación del token JWT
         const verified = jwt.verify(tokenWithoutBearer, process.env.JWT_SECRET);
-        req.user = verified;  // Guardar los datos del usuario verificado en req.user
-        next();  // Continuar al siguiente middleware o controlador
+        req.user = verified; // Guardar los datos del usuario verificado en req.user
+        next(); // Continuar al siguiente middleware o controlador
     } catch (error) {
-        console.error('Error al verificar el token:', error);
-        return res.status(403).json({ message: 'Token no válido o expirado.' });  // Código 403 para indicar que está prohibido
+        console.error('Error al verificar el token:', error.message);
+        return res.status(403).json({ message: 'Token no válido o expirado.' }); // Código 403 para indicar que está prohibido
     }
 };
-

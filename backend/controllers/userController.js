@@ -11,30 +11,6 @@ const home = (req, res) => {
     res.send('Home page');
 };
 
-// Crear producto
-const createProduct = async (req, res) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-        return res.status(400).json({ errors: errors.array() });
-    }
-
-    try {
-        const { titulo, imagen, descripcion, precio, stock } = req.body;
-
-        // Validar entrada de datos
-        if (!titulo || !precio || !stock) {
-            return res.status(400).json({ message: 'Todos los campos obligatorios deben ser completados' });
-        }
-
-        // Agregar el producto a la base de datos
-        const result = await userModel.addProduct({ titulo, imagen, descripcion, precio, stock });
-        res.status(201).json({ message: 'Producto creado', product: result });
-    } catch (error) {
-        console.error('Error al crear producto:', error);
-        res.status(500).json({ message: 'Error interno del servidor al crear producto' });
-    }
-};
-
 // Crear usuario con encriptación de contraseña
 const createUser = async (req, res) => {
     const errors = validationResult(req);
@@ -87,9 +63,19 @@ const login = async (req, res) => {
             return res.status(400).json({ message: 'Contraseña incorrecta' });
         }
 
-        const token = jwt.sign({ id: user.id, email: user.email }, process.env.JWT_SECRET, { expiresIn: '1h' });
+        // Generar JWT con una clave secreta segura y asignar una duración
+        const token = jwt.sign(
+            { id: user.id, email: user.email }, 
+            process.env.JWT_SECRET, 
+            { expiresIn: '1h' }
+        );
 
-        res.status(200).json({ message: 'Login exitoso', token, user: { id: user.id, name: user.name, email: user.email } });
+        // Incluir roles o permisos si fuera necesario en el token
+        res.status(200).json({ 
+            message: 'Login exitoso', 
+            token, 
+            user: { id: user.id, name: user.name, email: user.email } 
+        });
     } catch (error) {
         console.error('Error en el login:', error);
         res.status(500).json({ message: 'Error interno del servidor durante el login' });
@@ -101,11 +87,15 @@ const notFound = (req, res) => {
     res.status(404).json({ message: 'Ruta no encontrada' });
 };
 
-export const controller = {
-    home,
-    createProduct,
-    createUser,
-    login,
-    notFound,
+// Crear producto (implementar lógica)
+const createProduct = async (req, res) => {
+    // Implementar la lógica de creación de productos
 };
 
+export const controller = {
+    home,
+    createUser,
+    login,
+    createProduct,
+    notFound,
+};

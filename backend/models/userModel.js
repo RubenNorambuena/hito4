@@ -2,49 +2,36 @@ import pool from '../db/dbConfig.js';
 
 export const userModel = {
     // Añadir un nuevo usuario
-    addUser: async (userData) => {
-        const { name, email, password, date_birth } = userData;
-        const sql = 'INSERT INTO users (name, email, password, date_birth) VALUES ($1, $2, $3, $4) RETURNING *';
+    addUser: async ({ name, email, password, date_birth }) => {
+        const sql = `
+            INSERT INTO users (name, email, password, date_birth)
+            VALUES ($1, $2, $3, $4) 
+            RETURNING id, name, email, date_birth
+        `;
         const values = [name, email, password, date_birth];
-        
+
         try {
-            const result = await pool.query(sql, values);
-            return result.rows[0];
+            const { rows } = await pool.query(sql, values);
+            return rows[0]; // Devolver el usuario creado sin exponer la contraseña
         } catch (error) {
+            if (error.code === '23505') { // Código de error para violación de restricción única (email duplicado)
+                throw new Error('El email ya está en uso');
+            }
             console.error('Error al añadir usuario:', error);
-            throw new Error('Error al añadir usuario');
+            throw new Error('Error interno del servidor');
         }
     },
     
     // Obtener un usuario por email
     getUser: async (email) => {
-        const sql = 'SELECT * FROM users WHERE email = $1';
+        const sql = 'SELECT id, name, email, password, date_birth FROM users WHERE email = $1';
         
         try {
-            const result = await pool.query(sql, [email]);
-            if (result.rows.length === 0) {
-                return null;
-            }
-            return result.rows[0];
+            const { rows } = await pool.query(sql, [email]);
+            return rows.length ? rows[0] : null; // Devolver null si no se encuentra el usuario
         } catch (error) {
             console.error('Error al obtener usuario:', error);
-            throw new Error('Error al obtener usuario');
-        }
-    },
-
-    // Añadir un producto
-    addProduct: async (productData) => {
-        const { titulo, imagen, descripcion, precio, stock } = productData;
-        const sql = 'INSERT INTO products (titulo, imagen, descripcion, precio, stock) VALUES ($1, $2, $3, $4, $5) RETURNING *';
-        const values = [titulo, imagen, descripcion, precio, stock];
-        
-        try {
-            const result = await pool.query(sql, values);
-            return result.rows[0];
-        } catch (error) {
-            console.error('Error al añadir producto:', error);
-            throw new Error('Error al añadir producto');
+            throw new Error('Error interno del servidor');
         }
     }
 };
-
