@@ -1,0 +1,172 @@
+body {
+  background-image: url('./img/hojas.jpg'); /* Cambia la ruta a la imagen que quieras usar */
+  background-size: cover; /* Ajusta el tamaño de la imagen para cubrir todo el contenedor */
+  font-family: "Montserrat", sans-serif;
+  text-align: justify;
+  
+  h1 {
+    color: #128D37;
+    font-weight: 700;
+  }
+  
+  p {
+    color: #128D37;
+    font-size: 1.25rem;
+  }
+  };
+ 
+  h1 {
+    color: #128D37;
+
+  }
+
+
+  .btn-primary {
+    background-color: #128D37; /* Color de fondo del botón de inicio de sesión */
+    border: none; /* Elimina el borde del botón */
+  }
+
+  /* Formulario de registro */
+.container-home {
+    height: 85vh; /* Asegura que el contenedor cubra toda la altura de la ventana */
+    width: 100%; /* Asegura que el contenedor cubra todo el ancho del contenedor padre */
+    display: flex; /* Usa Flexbox para centrar el contenido */
+    justify-content: center; /* Centra el contenido horizontalmente */
+    align-items: center; /* Centra el contenido verticalmente */
+    /*background-image: url('./img/hojas.jpg'); /* Cambia la ruta a la imagen que quieras usar */
+    background-size: cover; /* Ajusta el tamaño de la imagen para cubrir todo el contenedor */
+    background-position: center; /* Centra la imagen */
+    background-repeat: no-repeat; /* Evita que la imagen se repita */
+  }
+  
+  .form-home {
+    width: 50%; /* Ajusta el ancho del formulario */
+    max-width: 600px; /* Establece un ancho máximo para el formulario */
+    background: rgba(255, 255, 255, 0.9); /* Fondo blanco semi-transparente para el formulario */
+    padding: 20px; /* Añade espacio interno alrededor del formulario */
+    border-radius: 8px; /* Bordes redondeados del formulario */
+    max-width: 100%; /* Asegura que el formulario use todo el ancho disponible dentro del contenedor */
+
+  }
+
+  .form-container {
+    background: rgba(255, 255, 255, 0.9); /* Fondo blanco con opacidad para asegurar la legibilidad */
+    padding: 20px; /* Espaciado interno para el formulario */
+    border-radius: 8px; /* Bordes redondeados */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para un efecto de profundidad */
+  }
+  
+  
+  .mb-4 {
+    margin-bottom: 1.5rem; /* Espaciado adicional en el título */
+  }
+  
+  @media (min-width: 768px) {
+    .form-home {
+      max-width: 500px; /* Ancho máximo en pantallas medianas y grandes */
+    }
+  }
+
+ 
+
+    /* Formulario de login */
+.container-login {
+  height: 85vh; /* Asegura que el contenedor cubra toda la altura de la ventana */
+  width: 100%; /* Asegura que el contenedor cubra todo el ancho del contenedor padre */
+  display: flex; /* Usa Flexbox para centrar el contenido */
+  justify-content: space-around; /* Centra el contenido horizontalmente */
+  align-items: center; /* Centra el contenido verticalmente */
+  /*background-image: url('./img/hojas.jpg'); /* Cambia la ruta a la imagen que quieras usar */
+  background-size: cover; /* Ajusta el tamaño de la imagen para cubrir todo el contenedor */
+  background-position: center; /* Centra la imagen */
+  background-repeat: no-repeat; /* Evita que la imagen se repita */
+}
+
+.form-login {
+  width: 100%; /* Ajusta el ancho del formulario */
+  max-width: 600px; /* Establece un ancho máximo para el formulario */
+  background: rgba(255, 255, 255, 0.9); /* Fondo blanco semi-transparente para el formulario */
+  padding: 20px; /* Añade espacio interno alrededor del formulario */
+  border-radius: 8px; /* Bordes redondeados del formulario */
+  max-width: 100%; /* Asegura que el formulario use todo el ancho disponible dentro del contenedor */
+
+}
+
+.form-container-login {
+  width: 100%;
+  max-width: 450px; /* Ajusta el ancho máximo del formulario */
+  background: rgba(255, 255, 255, 0.9); /* Fondo blanco con opacidad para asegurar la legibilidad */
+  padding: 20px; /* Espaciado interno para el formulario */
+  border-radius: 8px; /* Bordes redondeados */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para un efecto de profundidad */
+}
+
+    /* Formulario de agregar */
+
+ .navbar-agregar {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Ajusta los valores según tus preferencias */
+    border-radius: 8px; /* Bordes redondeados */
+  }    
+.container-agregar {
+  height: 85vh; /* Asegura que el contenedor cubra toda la altura de la ventana */
+  width: 100%; /* Asegura que el contenedor cubra todo el ancho del contenedor padre */
+  display: flex; /* Usa Flexbox para centrar el contenido */
+  justify-content: space-around; /* Centra el contenido horizontalmente */
+  align-items: center; /* Centra el contenido verticalmente */
+  /*background-image: url('./img/hojas.jpg'); /* Cambia la ruta a la imagen que quieras usar */
+  background-size: cover; /* Ajusta el tamaño de la imagen para cubrir todo el contenedor */
+  background-position: center; /* Centra la imagen */
+  background-repeat: no-repeat; /* Evita que la imagen se repita */
+}
+
+.form-agregar {
+  width: 100%; /* Ajusta el ancho del formulario */
+  max-width: 600px; /* Establece un ancho máximo para el formulario */
+  background: rgba(255, 255, 255, 0.9); /* Fondo blanco semi-transparente para el formulario */
+  padding: 20px; /* Añade espacio interno alrededor del formulario */
+  border-radius: 8px; /* Bordes redondeados del formulario */
+  max-width: 100%; /* Asegura que el formulario use todo el ancho disponible dentro del contenedor */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para un efecto de profundidad */
+
+
+}
+
+.form-container-agregar {
+  width: 100%;
+  max-width: 450px; /* Ajusta el ancho máximo del formulario */
+  background: rgba(255, 255, 255, 0.9); /* Fondo blanco con opacidad para asegurar la legibilidad */
+  padding: 20px; /* Espaciado interno para el formulario */
+  border-radius: 8px; /* Bordes redondeados */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para un efecto de profundidad */
+}
+
+  /* Formulario de inicio sesión */
+
+  .navbar-inicio-sesion {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Ajusta los valores según tus preferencias */
+    border-radius: 8px; /* Bordes redondeados */
+  }    
+ 
+  .navbar-inicio {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Ajusta los valores según tus preferencias */
+    border-radius: 8px; /* Bordes redondeados */
+  }    
+
+      /* Formulario de inicio */
+.container-inicio {
+  height: 85vh; /* Asegura que el contenedor cubra toda la altura de la ventana */
+  width: 100%; /* Asegura que el contenedor cubra todo el ancho del contenedor padre */
+  display: flex; /* Usa Flexbox para centrar el contenido */
+  justify-content: space-around; /* Centra el contenido horizontalmente */
+  align-items: center; /* Centra el contenido verticalmente */
+  /*background-image: url('./img/hojas.jpg'); /* Cambia la ruta a la imagen que quieras usar */
+  background-size: cover; /* Ajusta el tamaño de la imagen para cubrir todo el contenedor */
+  background-position: center; /* Centra la imagen */
+  background-repeat: no-repeat; /* Evita que la imagen se repita */
+}
+
+.container-navbar-inicio {
+  position: absolute;
+  top: 30px; /* Ajusta según sea necesario */
+}
+  
