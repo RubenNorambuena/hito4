@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import Container from 'react-bootstrap/Container';
 import { Col, Row, Form, Button } from 'react-bootstrap';
@@ -6,8 +5,7 @@ import NavbarInicioSesion from '../components/NavbarInicioSesion';
 import { useNavigate } from 'react-router-dom';
 import { useAppContext } from '../context/AppContext';
 
-
-const API_URL = import.meta.env.VITE_API_URL;
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000'; // Asegúrate de que esté definido
 
 function Login() {
   const [email, setEmail] = useState('');
@@ -16,8 +14,6 @@ function Login() {
   const [loading, setLoading] = useState(false);
   const { setUser } = useAppContext();
   const navigate = useNavigate();
-
-  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -32,7 +28,6 @@ function Login() {
     setLoading(true);
 
     try {
-      // Hacer una solicitud a tu backend para autenticar al usuario
       const response = await loginUser(email, password);
       setLoading(false);
 
@@ -45,15 +40,14 @@ function Login() {
     } catch (error) {
       setLoading(false);
       console.error('Error en loginUser:', error); // Debugging
-      setError('Ocurrió un error. Intenta nuevamente.');
+      setError(error.message || 'Ocurrió un error. Intenta nuevamente.');
     }
   };
 
-  // Función para hacer login real
   const loginUser = async (email, password) => {
-
     try {
-      const response = await fetch(`${API_URL}/api/user/login`, { // Aquí se actualiza la URL
+      //const response = await fetch(`${API_URL}/api/user/login`, {
+      const response = await fetch('http://localhost:3000/api/user/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -62,12 +56,11 @@ function Login() {
       });
 
       if (!response.ok) {
-        const errorData = await response.json(); // Obtener detalles del error si existen
+        const errorData = await response.json();
         throw new Error(errorData.message || 'Error en la autenticación');
       }
 
-      const data = await response.json();
-      return data;
+      return await response.json();
     } catch (error) {
       throw new Error(error.message || 'Error de red');
     }
@@ -76,9 +69,7 @@ function Login() {
   return (
     <Container>
       <Container className="container-login d-flex flex-column justify-content-space-around">
-        <Container>
-          <NavbarInicioSesion />
-        </Container>
+        <NavbarInicioSesion />
         <Row className="justify-content-center w-100">
           <Col xs={12} md={8} lg={6} className="d-flex justify-content-center">
             <div className="form-container-login d-flex flex-column justify-content-center align-items-center">
@@ -123,3 +114,4 @@ function Login() {
 }
 
 export default Login;
+
