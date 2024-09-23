@@ -1,0 +1,6 @@
+.custom-carousel {
+    max-width: 500px; /* Ajusta el ancho del carrusel */
+    max-height: 500px; /* Ajusta la altura del carrusel */
+    margin: 0 auto; /* Centra el carrusel */
+  }
+  

@@ -16,17 +16,17 @@ const Productos = () => {
   };
 
   return (
-    <Container>
+    <Container className="container-inicio d-flex flex-column justify-content-space-around">
+        <Container className='container-navbar-inicio'>
       <NavbarInicio /> {/* Asegúrate de que el Navbar se muestra */}
+      <br></br>
       <h1 className="text-center">Nuestros Productos</h1>
-      <h3>Bienvenido</h3>
-      <h3>{user.email}</h3>
       <Row>
         {productos.length > 0 ? (
           productos.map((producto) => (
             <Col key={producto.id} xs={12} md={6} lg={4} className="mb-4">
               <Card>
-                <Card.Img variant="top" src={producto.imagen} />
+                <Card.Img variant="top" src={producto.imagen} style={{ height: '200px', objectFit: 'cover' }} />
                 <Card.Body>
                   <Card.Title>{producto.titulo}</Card.Title>
                   <Card.Text>{producto.descripcion}</Card.Text>
@@ -46,6 +46,7 @@ const Productos = () => {
           <p>No hay productos disponibles.</p>
         )}
       </Row>
+    </Container> 
     </Container>
   );
 };

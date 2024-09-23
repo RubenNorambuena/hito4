@@ -6,6 +6,12 @@ import { validationResult } from 'express-validator';
 
 config(); // Cargar las variables de entorno
 
+// Función para manejar errores
+const handleErrors = (res, statusCode, message, error) => {
+    console.error(message, error);
+    return res.status(statusCode).json({ message });
+};
+
 // Controlador Home
 const home = (req, res) => {
     res.send('Home page');
@@ -26,20 +32,12 @@ const createUser = async (req, res) => {
             return res.status(400).json({ message: 'El usuario ya existe' });
         }
 
-        const salt = await bcrypt.genSalt(10);
-        const hashedPassword = await bcrypt.hash(password, salt);
-
-        const result = await userModel.addUser({
-            name,
-            email,
-            password: hashedPassword,
-            date_birth,
-        });
+        const hashedPassword = await bcrypt.hash(password, 10);
+        const result = await userModel.addUser({ name, email, password: hashedPassword, date_birth });
 
         res.status(201).json({ message: 'Usuario creado con éxito', user: result });
     } catch (error) {
-        console.error('Error al crear usuario:', error);
-        res.status(500).json({ message: 'Error interno del servidor al crear usuario' });
+        handleErrors(res, 500, 'Error interno del servidor al crear usuario', error);
     }
 };
 
@@ -50,9 +48,9 @@ const login = async (req, res) => {
         return res.status(400).json({ errors: errors.array() });
     }
 
-    try {
-        const { email, password } = req.body;
+    const { email, password } = req.body;
 
+    try {
         const user = await userModel.getUser(email);
         if (!user) {
             return res.status(404).json({ message: 'Usuario no encontrado' });
@@ -63,33 +61,26 @@ const login = async (req, res) => {
             return res.status(400).json({ message: 'Contraseña incorrecta' });
         }
 
-        // Generar JWT con una clave secreta segura y asignar una duración
-        const token = jwt.sign(
-            { id: user.id, email: user.email }, 
-            process.env.JWT_SECRET, 
-            { expiresIn: '1h' }
-        );
+        const token = jwt.sign({ id: user.id, email: user.email }, process.env.JWT_SECRET, { expiresIn: '1h' });
 
-        // Incluir roles o permisos si fuera necesario en el token
-        res.status(200).json({ 
-            message: 'Login exitoso', 
-            token, 
-            user: { id: user.id, name: user.name, email: user.email } 
+        res.status(200).json({
+            message: 'Login exitoso',
+            token,
+            user: { id: user.id, name: user.name, email: user.email }
         });
     } catch (error) {
-        console.error('Error en el login:', error);
-        res.status(500).json({ message: 'Error interno del servidor durante el login' });
+        handleErrors(res, 500, 'Error interno del servidor durante el login', error);
     }
-};
-
-// Ruta para manejar errores 404
-const notFound = (req, res) => {
-    res.status(404).json({ message: 'Ruta no encontrada' });
 };
 
 // Crear producto (implementar lógica)
 const createProduct = async (req, res) => {
     // Implementar la lógica de creación de productos
+};
+
+// Ruta para manejar errores 404 (opcionalmente se puede eliminar, ya que ya tienes un middleware para 404 en las rutas)
+const notFound = (req, res) => {
+    res.status(404).json({ message: 'Ruta no encontrada' });
 };
 
 export const controller = {

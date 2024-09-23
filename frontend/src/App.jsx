@@ -1,5 +1,4 @@
-import React, { useEffect } from 'react';
-
+import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {  Route, Routes } from 'react-router-dom';
 import Home from './view/Home';
@@ -11,17 +10,16 @@ import Perfil from './view/Perfil';
 import Productos from './view/Productos';
 import { AppProvider } from './context/AppContext';
 
+
 const App = () => {
   return (
     <>
      <AppProvider>
-
-  
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/inicio" element={<Inicio />} />
-        <Route path="/agregar-producto" element={<Agregar/>} />
+        <Route path="/agregar" element={<Agregar/>} />
         <Route path="/productos" element={<Productos/>} />
         <Route path="/favoritos" element={<Favoritos/>} />
         <Route path="/perfil" element={<Perfil/>} />
@@ -33,5 +31,5 @@ const App = () => {
   );
 };
 
-
 export default App;
+

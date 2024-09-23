@@ -119,6 +119,8 @@ body {
   background-repeat: no-repeat; /* Evita que la imagen se repita */
 }
 
+
+
 .form-agregar {
   width: 100%; /* Ajusta el ancho del formulario */
   max-width: 600px; /* Establece un ancho máximo para el formulario */

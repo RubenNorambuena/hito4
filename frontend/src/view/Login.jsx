@@ -5,8 +5,6 @@ import NavbarInicioSesion from '../components/NavbarInicioSesion';
 import { useNavigate } from 'react-router-dom';
 import { useAppContext } from '../context/AppContext';
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000'; // Asegúrate de que esté definido
-
 function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -28,8 +26,10 @@ function Login() {
     setLoading(true);
 
     try {
-      const response = await loginUser(email, password);
+      const response = await fakeLogin(email, password);
       setLoading(false);
+
+      console.log('Respuesta de fakeLogin:', response); // Debugging
 
       if (response.success) {
         setUser(response.user); // Guarda al usuario en el contexto global
@@ -39,37 +39,30 @@ function Login() {
       }
     } catch (error) {
       setLoading(false);
-      console.error('Error en loginUser:', error); // Debugging
-      setError(error.message || 'Ocurrió un error. Intenta nuevamente.');
+      console.error('Error en fakeLogin:', error); // Debugging
+      setError('Ocurrió un error. Intenta nuevamente.');
     }
   };
 
-  const loginUser = async (email, password) => {
-    try {
-      //const response = await fetch(`${API_URL}/api/user/login`, {
-      const response = await fetch('http://localhost:3000/api/user/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email, password }),
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || 'Error en la autenticación');
-      }
-
-      return await response.json();
-    } catch (error) {
-      throw new Error(error.message || 'Error de red');
-    }
+  // Función para simular la autenticación
+  const fakeLogin = (email, password) => {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        if (email === 'usuario@example.com' && password === '123456') {
+          resolve({ success: true, user: { nombre: 'Usuario Ejemplo', email: 'usuario@example.com' } });
+        } else {
+          resolve({ success: false });
+        }
+      }, 1000); // Simula un retardo de 1 segundo
+    });
   };
 
   return (
     <Container>
       <Container className="container-login d-flex flex-column justify-content-space-around">
-        <NavbarInicioSesion />
+        <Container>
+          <NavbarInicioSesion />
+        </Container>
         <Row className="justify-content-center w-100">
           <Col xs={12} md={8} lg={6} className="d-flex justify-content-center">
             <div className="form-container-login d-flex flex-column justify-content-center align-items-center">

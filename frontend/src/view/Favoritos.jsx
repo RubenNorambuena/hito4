@@ -15,10 +15,8 @@ const Favoritos = () => {
     <>
       <Container className="container-inicio d-flex flex-column justify-content-space-around">
         <Container className='container-navbar-inicio'>
-          <NavbarInicio />
-        </Container>
-
-        <Container>
+        <NavbarInicio />
+        <br></br>
           <h1 className="text-center">Tus Favoritos</h1>
           <h3>Bienvenido</h3>
           <h3>{user.email}</h3>
